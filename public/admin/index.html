@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. Kittiphat ERP · Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/admin/css/admin.css" />
+</head>
+<body>
+  <!-- Login -->
+  <div id="login" class="login">
+    <form class="login__card" id="loginForm">
+      <div class="login__brand"><span class="brand__mark">✚</span> Dr.Kittiphat <small>ERP Admin</small></div>
+      <h2>เข้าสู่ระบบ</h2>
+      <div class="field"><label>Username</label><input name="username" value="admin" autocomplete="username" /></div>
+      <div class="field"><label>Password</label><input name="password" type="password" value="admin123" autocomplete="current-password" /></div>
+      <button class="btn btn--primary btn--block" type="submit">Login</button>
+      <p class="login__hint">Demo: <b>admin / admin123</b></p>
+      <p class="login__err" id="loginErr"></p>
+    </form>
+  </div>
+
+  <!-- App shell -->
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="sidebar__brand"><span class="brand__mark">✚</span> Dr.Kittiphat</div>
+      <nav class="menu" id="menu">
+        <a data-view="dashboard" class="active">📊 Dashboard</a>
+        <a data-view="appointments">📅 นัดหมาย</a>
+        <a data-view="patients">🧑‍🦽 ผู้ป่วย</a>
+        <a data-view="services">💉 บริการ</a>
+        <a data-view="invoices">🧾 ใบเสร็จ/บิล</a>
+        <a data-view="inventory">📦 คลังยา/เวชภัณฑ์</a>
+      </nav>
+      <div class="sidebar__foot">
+        <a href="/" target="_blank">↗ ดูเว็บไซต์</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <h1 id="viewTitle">Dashboard</h1>
+        <div class="topbar__right">
+          <span id="userBadge" class="userbadge"></span>
+          <button class="btn btn--ghost btn--sm" id="logoutBtn">Logout</button>
+        </div>
+      </header>
+      <section id="view" class="view"></section>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal__card">
+      <div class="modal__head"><h3 id="modalTitle">Edit</h3><button id="modalClose" class="modal__x">✕</button></div>
+      <form id="modalForm" class="modal__body"></form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/admin/js/admin.js"></script>
+</body>
+</html>
