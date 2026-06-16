@@ -4,7 +4,6 @@ let TOKEN = localStorage.getItem(TOKEN_KEY) || null;
 let USER = JSON.parse(localStorage.getItem("drk_user") || "null");
 
 const $ = (s, r = document) => r.querySelector(s);
-const baht = (n) => "฿" + Number(n || 0).toLocaleString();
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 async function api(path, opts = {}) {
@@ -38,26 +37,6 @@ const tag = (v) => `<span class="tag tag--${STATUS_TAG[v] || "gray"}">${esc(v)}<
 
 // ===== Schema: drives tables + forms =====
 const SCHEMA = {
-  appointments: {
-    title: "คิว / ผู้ป่วยเข้าตรวจ (Walk-in Visits)",
-    columns: [
-      { key: "date", label: "Date" },
-      { key: "time", label: "Time" },
-      { key: "patientName", label: "Patient" },
-      { key: "serviceName", label: "Service" },
-      { key: "status", label: "Status", render: (v) => tag(v) },
-      { key: "note", label: "Note" },
-    ],
-    fields: [
-      { key: "patientName", label: "Patient name", required: true },
-      { key: "phone", label: "Phone" },
-      { key: "serviceName", label: "Service" },
-      { key: "date", label: "Date", type: "date" },
-      { key: "time", label: "Time", type: "time" },
-      { key: "status", label: "Status", type: "select", options: ["pending", "confirmed", "checked-in", "completed", "cancelled"] },
-      { key: "note", label: "Note", type: "textarea" },
-    ],
-  },
   patients: {
     title: "ผู้ป่วย (Patients)",
     columns: [
@@ -90,23 +69,6 @@ const SCHEMA = {
       { key: "active", label: "Active", type: "checkbox" },
     ],
   },
-  invoices: {
-    title: "ใบเสร็จ / บิล (Invoices)",
-    columns: [
-      { key: "number", label: "No." },
-      { key: "date", label: "Date" },
-      { key: "patientName", label: "Patient" },
-      { key: "total", label: "Total", render: (v) => baht(v) },
-      { key: "status", label: "Status", render: (v) => tag(v) },
-    ],
-    fields: [
-      { key: "number", label: "Invoice No." },
-      { key: "patientName", label: "Patient name", required: true },
-      { key: "date", label: "Date", type: "date" },
-      { key: "total", label: "Total (฿)", type: "number" },
-      { key: "status", label: "Status", type: "select", options: ["unpaid", "paid", "overdue"] },
-    ],
-  },
   inventory: {
     title: "คลังยา / เวชภัณฑ์ (Inventory)",
     columns: [
@@ -137,25 +99,21 @@ async function renderDashboard() {
   const s = await api("/dashboard/stats");
   view.innerHTML = `
     <div class="stats">
-      <div class="stat stat--accent"><div class="stat__label">ผู้ป่วยวันนี้</div><div class="stat__value">${s.appointmentsToday}</div></div>
-      <div class="stat"><div class="stat__label">ผู้ป่วยทั้งหมด</div><div class="stat__value">${s.patients}</div></div>
-      <div class="stat"><div class="stat__label">รอตรวจ</div><div class="stat__value">${s.pendingAppointments}</div></div>
+      <div class="stat stat--accent"><div class="stat__label">ผู้ป่วยทั้งหมด</div><div class="stat__value">${s.patients}</div></div>
+      <div class="stat"><div class="stat__label">ผู้ป่วยใหม่เดือนนี้</div><div class="stat__value">${s.newPatientsThisMonth}</div></div>
+      <div class="stat"><div class="stat__label">บริการที่เปิด</div><div class="stat__value">${s.services}</div></div>
       <div class="stat stat--warn"><div class="stat__label">สต็อกใกล้หมด</div><div class="stat__value">${s.lowStock}</div></div>
     </div>
     <div class="grid2">
       <div class="panel">
-        <div class="panel__head"><h3>คิว / ผู้ป่วยที่กำลังจะมา</h3><a class="btn btn--ghost btn--sm" data-go="appointments">ดูทั้งหมด →</a></div>
-        <table><thead><tr><th>วันที่</th><th>เวลา</th><th>ผู้ป่วย</th><th>บริการ</th><th>สถานะ</th></tr></thead>
-        <tbody>${s.upcoming.length ? s.upcoming.map((a) => `<tr><td>${esc(a.date)}</td><td>${esc(a.time || "-")}</td><td>${esc(a.patientName)}</td><td>${esc(a.serviceName || "-")}</td><td>${tag(a.status)}</td></tr>`).join("") : `<tr><td colspan="5" class="empty">ไม่มีคิว</td></tr>`}</tbody></table>
+        <div class="panel__head"><h3>ผู้ป่วยล่าสุด</h3><a class="btn btn--ghost btn--sm" data-go="patients">ดูทั้งหมด →</a></div>
+        <table><thead><tr><th>HN</th><th>ชื่อ</th><th>อาการ</th><th>เบอร์โทร</th></tr></thead>
+        <tbody>${s.recentPatients.length ? s.recentPatients.map((p) => `<tr><td>${esc(p.hn || "-")}</td><td>${esc(p.name)}</td><td>${esc(p.condition || "-")}</td><td>${esc(p.phone || "-")}</td></tr>`).join("") : `<tr><td colspan="4" class="empty">ยังไม่มีผู้ป่วย</td></tr>`}</tbody></table>
       </div>
       <div class="panel">
-        <div class="panel__head"><h3>สรุปคลินิก</h3></div>
-        <table><tbody>
-          <tr><td>ผู้ป่วยทั้งหมด</td><td style="text-align:right"><b>${s.patients}</b></td></tr>
-          <tr><td>ผู้ป่วยวันนี้</td><td style="text-align:right">${s.appointmentsToday}</td></tr>
-          <tr><td>รอตรวจ</td><td style="text-align:right">${s.pendingAppointments}</td></tr>
-          <tr><td>รายการสต็อกใกล้หมด</td><td style="text-align:right">${s.lowStock ? tag("low") + " " : ""}${s.lowStock}</td></tr>
-        </tbody></table>
+        <div class="panel__head"><h3>สต็อกใกล้หมด</h3><a class="btn btn--ghost btn--sm" data-go="inventory">จัดการคลัง →</a></div>
+        <table><thead><tr><th>รายการ</th><th>คงเหลือ</th><th>จุดสั่งซื้อ</th></tr></thead>
+        <tbody>${s.lowStockItems.length ? s.lowStockItems.map((i) => `<tr><td>${esc(i.name)}</td><td>${esc(i.stock)} ${esc(i.unit || "")} ${tag("low")}</td><td>${esc(i.reorderLevel)}</td></tr>`).join("") : `<tr><td colspan="3" class="empty">สต็อกเพียงพอทุกรายการ</td></tr>`}</tbody></table>
       </div>
     </div>`;
   view.querySelectorAll("[data-go]").forEach((el) => el.addEventListener("click", () => navigate(el.dataset.go)));

@@ -27,8 +27,9 @@ npm start        # http://localhost:3000  (auto-seeds demo data on first run)
 - Thai-first, responsive.
 
 **Admin ERP** (`public/admin/`)
-- Token login + dashboard (today's patients, total patients, waiting, low-stock alerts).
-- CRUD modules: Walk-in Visits (queue), Patients, Services (catalog), Invoices (optional billing), Inventory.
+- Token login + dashboard (total patients, new patients this month, active services, low-stock alerts, recent patients, low-stock list).
+- CRUD modules: Patients, Services (catalog, no prices), Inventory.
+- No appointments (walk-in clinic) and no billing/prices.
 - Search, add/edit/delete via modal forms (schema-driven).
 
 ## Structure

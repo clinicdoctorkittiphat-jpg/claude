@@ -44,26 +44,26 @@ app.post("/api/auth/logout", auth, (req, res) => {
 
 // --- Dashboard stats -------------------------------------------------------
 app.get("/api/dashboard/stats", auth, (req, res) => {
-  const today = new Date().toISOString().slice(0, 10);
-  const appts = store.list("appointments");
-  const invoices = store.list("invoices");
+  const monthPrefix = new Date().toISOString().slice(0, 7); // YYYY-MM
+  const patients = store.list("patients");
+  const services = store.list("services");
   const inventory = store.list("inventory");
+  const lowStockItems = inventory.filter((i) => i.stock <= i.reorderLevel);
   res.json({
-    patients: store.list("patients").length,
-    appointmentsToday: appts.filter((a) => a.date === today).length,
-    pendingAppointments: appts.filter((a) => a.status === "pending").length,
-    revenuePaid: invoices.filter((i) => i.status === "paid").reduce((s, i) => s + (i.total || 0), 0),
-    revenueUnpaid: invoices.filter((i) => i.status === "unpaid").reduce((s, i) => s + (i.total || 0), 0),
-    lowStock: inventory.filter((i) => i.stock <= i.reorderLevel).length,
-    upcoming: appts
-      .filter((a) => a.date >= today)
-      .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
+    patients: patients.length,
+    newPatientsThisMonth: patients.filter((p) => (p.createdAt || "").startsWith(monthPrefix)).length,
+    services: services.filter((s) => s.active !== false).length,
+    inventory: inventory.length,
+    lowStock: lowStockItems.length,
+    lowStockItems: lowStockItems.slice(0, 8),
+    recentPatients: [...patients]
+      .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
       .slice(0, 6),
   });
 });
 
 // --- Generic CRUD for the admin collections --------------------------------
-const COLLECTIONS = ["patients", "appointments", "services", "invoices", "inventory"];
+const COLLECTIONS = ["patients", "services", "inventory"];
 function guard(req, res, next) {
   if (!COLLECTIONS.includes(req.params.collection))
     return res.status(404).json({ error: "Unknown collection" });

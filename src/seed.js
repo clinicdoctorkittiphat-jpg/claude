@@ -37,17 +37,6 @@ export function seed() {
     { id: "pat_1005", hn: "HN-1005", name: "อนุชา พรหมมา", gender: "M", age: 29, phone: "095-432-1100", condition: "Ankle sprain", createdAt: addDays(-3) + "T09:00:00Z" },
   ]);
 
-  replaceAll("appointments", [
-    { id: "apt_1", patientId: "pat_1001", patientName: "สมชาย ใจดี", serviceId: "svc_consult", serviceName: "ตรวจ/ปรึกษา", date: addDays(0), time: "17:30", status: "confirmed", note: "Follow-up knee" },
-    { id: "apt_2", patientId: "pat_1002", patientName: "มาลี รักสุข", serviceId: "svc_consult", serviceName: "ตรวจ/ปรึกษา", date: addDays(0), time: "18:00", status: "confirmed", note: "ปวดบ่าไหล่" },
-    { id: "apt_3", patientId: "pat_1005", patientName: "อนุชา พรหมมา", serviceId: "svc_xray", serviceName: "Digital X-ray", date: addDays(0), time: "18:30", status: "checked-in", note: "ข้อเท้าซ้าย" },
-    { id: "apt_4", patientId: "pat_1003", patientName: "John Carter", serviceId: "svc_consult", serviceName: "ตรวจ/ปรึกษา", date: addDays(1), time: "19:00", status: "confirmed", note: "Knee pain" },
-    { id: "apt_5", patientId: "pat_1004", patientName: "ปรียา วงศ์ทอง", serviceId: "svc_injection", serviceName: "ฉีดยาเข้าข้อ", date: addDays(2), time: "17:30", status: "pending", note: "" },
-  ]);
-
-  // Billing left empty — record charges per visit only if/when the clinic wants to.
-  replaceAll("invoices", []);
-
   replaceAll("inventory", [
     { id: "itm_1", sku: "MED-001", name: "Diclofenac 50mg (tab)", category: "Medicine", stock: 420, reorderLevel: 100, unit: "tab" },
     { id: "itm_2", sku: "MED-002", name: "Hyaluronic acid (vial)", category: "Medicine", stock: 12, reorderLevel: 15, unit: "vial" },

@@ -12,14 +12,7 @@ const DB_PATH = process.env.DB_PATH || resolve(__dirname, "../data/clinic.db");
 const dir = dirname(DB_PATH);
 if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
 
-export const COLLECTIONS = [
-  "users",
-  "patients",
-  "appointments",
-  "services",
-  "invoices",
-  "inventory",
-];
+export const COLLECTIONS = ["users", "patients", "services", "inventory"];
 
 const db = new DatabaseSync(DB_PATH);
 db.exec("PRAGMA journal_mode = WAL;");
