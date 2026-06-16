@@ -1,6 +1,8 @@
-# Dr. Kittiphat — Clinic ERP (Prototype)
+# คลินิกกระดูกและข้อหมอกิตติพัฐ — Clinic ERP (Prototype)
 
-A landing page + admin ERP backend for **Dr. Kittiphat Orthopaedic Clinic**.
+A landing page + admin ERP backend for **Dr. Kittiphat Orthopedic Clinic, Phuket**
+(คลินิกกระดูกและข้อหมอกิตติพัฐ) — non-surgical orthopedic care.
+Content based on [clinicdoctorkittiphat.com](https://www.clinicdoctorkittiphat.com).
 Node + Express, SQLite (built-in `node:sqlite`, no native build), bcrypt-hashed passwords.
 
 ## Run

@@ -19,13 +19,14 @@ export function seed() {
     { id: "usr_nurse", name: "พยาบาลสมหญิง", email: "nurse@drkittiphat.clinic", username: "nurse", password: hash("nurse123"), role: "staff" },
   ]);
 
+  // Prices below are editable placeholders — set real prices in the admin panel.
   replaceAll("services", [
-    { id: "svc_consult", name: "ปรึกษาแพทย์กระดูกและข้อ (Consultation)", category: "OPD", price: 800, duration: 30, active: true },
-    { id: "svc_xray", name: "เอกซเรย์ (X-ray)", category: "Imaging", price: 600, duration: 15, active: true },
+    { id: "svc_consult", name: "ตรวจ/ปรึกษาแพทย์กระดูกและข้อ", category: "OPD", price: 500, duration: 20, active: true },
+    { id: "svc_xray", name: "เอกซเรย์ดิจิทัล (Digital X-ray)", category: "Imaging", price: 600, duration: 15, active: true },
     { id: "svc_injection", name: "ฉีดยาเข้าข้อ (Joint Injection)", category: "Procedure", price: 2500, duration: 30, active: true },
-    { id: "svc_pt", name: "กายภาพบำบัด (Physiotherapy)", category: "Rehab", price: 1200, duration: 45, active: true },
-    { id: "svc_cast", name: "ใส่เฝือก (Casting)", category: "Procedure", price: 1800, duration: 40, active: true },
-    { id: "svc_prp", name: "PRP Injection", category: "Procedure", price: 9000, duration: 60, active: true },
+    { id: "svc_trigger", name: "ฉีดยานิ้วล็อก (Trigger Finger Injection)", category: "Procedure", price: 1500, duration: 20, active: true },
+    { id: "svc_med", name: "ยา / เวชภัณฑ์", category: "Other", price: 0, duration: 0, active: true },
+    { id: "svc_dressing", name: "ทำแผล / หัตถการเล็ก", category: "Procedure", price: 400, duration: 15, active: true },
   ]);
 
   replaceAll("patients", [
@@ -37,11 +38,11 @@ export function seed() {
   ]);
 
   replaceAll("appointments", [
-    { id: "apt_1", patientId: "pat_1001", patientName: "สมชาย ใจดี", serviceId: "svc_consult", serviceName: "Consultation", date: addDays(0), time: "09:30", status: "confirmed", note: "Follow-up knee" },
-    { id: "apt_2", patientId: "pat_1002", patientName: "มาลี รักสุข", serviceId: "svc_pt", serviceName: "Physiotherapy", date: addDays(0), time: "10:30", status: "confirmed", note: "" },
-    { id: "apt_3", patientId: "pat_1005", patientName: "อนุชา พรหมมา", serviceId: "svc_xray", serviceName: "X-ray", date: addDays(0), time: "13:00", status: "checked-in", note: "Left ankle" },
-    { id: "apt_4", patientId: "pat_1003", patientName: "John Carter", serviceId: "svc_pt", serviceName: "Physiotherapy", date: addDays(1), time: "11:00", status: "confirmed", note: "Rehab week 6" },
-    { id: "apt_5", patientId: "pat_1004", patientName: "ปรียา วงศ์ทอง", serviceId: "svc_injection", serviceName: "Joint Injection", date: addDays(2), time: "14:00", status: "pending", note: "" },
+    { id: "apt_1", patientId: "pat_1001", patientName: "สมชาย ใจดี", serviceId: "svc_consult", serviceName: "ตรวจ/ปรึกษา", date: addDays(0), time: "17:30", status: "confirmed", note: "Follow-up knee" },
+    { id: "apt_2", patientId: "pat_1002", patientName: "มาลี รักสุข", serviceId: "svc_consult", serviceName: "ตรวจ/ปรึกษา", date: addDays(0), time: "18:00", status: "confirmed", note: "ปวดบ่าไหล่" },
+    { id: "apt_3", patientId: "pat_1005", patientName: "อนุชา พรหมมา", serviceId: "svc_xray", serviceName: "Digital X-ray", date: addDays(0), time: "18:30", status: "checked-in", note: "ข้อเท้าซ้าย" },
+    { id: "apt_4", patientId: "pat_1003", patientName: "John Carter", serviceId: "svc_consult", serviceName: "ตรวจ/ปรึกษา", date: addDays(1), time: "19:00", status: "confirmed", note: "Knee pain" },
+    { id: "apt_5", patientId: "pat_1004", patientName: "ปรียา วงศ์ทอง", serviceId: "svc_injection", serviceName: "ฉีดยาเข้าข้อ", date: addDays(2), time: "17:30", status: "pending", note: "" },
   ]);
 
   replaceAll("invoices", [

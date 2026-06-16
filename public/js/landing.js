@@ -1,11 +1,11 @@
-// Pull live services from the ERP (public read via login-free fallback list).
-const FALLBACK = [
-  { name: "ปรึกษาแพทย์กระดูกและข้อ", category: "OPD", price: 800, duration: 30 },
-  { name: "เอกซเรย์ (X-ray)", category: "Imaging", price: 600, duration: 15 },
-  { name: "ฉีดยาเข้าข้อ (Joint Injection)", category: "Procedure", price: 2500, duration: 30 },
-  { name: "กายภาพบำบัด (Physiotherapy)", category: "Rehab", price: 1200, duration: 45 },
-  { name: "ใส่เฝือก (Casting)", category: "Procedure", price: 1800, duration: 40 },
-  { name: "PRP Injection", category: "Procedure", price: 9000, duration: 60 },
+// Conditions the clinic treats (from clinicdoctorkittiphat.com).
+const SERVICES = [
+  { icon: "🦵", category: "เข่า", name: "ปวดเข่า / ข้อเข่าเสื่อม", desc: "ประเมินและดูแลอาการปวดเข่าและข้อเข่าเสื่อมแบบไม่ผ่าตัด" },
+  { icon: "🧍", category: "หลัง", name: "ปวดหลัง / ปวดร้าวลงขา", desc: "ตรวจหาสาเหตุอาการปวดหลังและปวดร้าวลงขา" },
+  { icon: "💆", category: "คอ บ่า ไหล่", name: "ปวดคอ บ่า ไหล่ แขน", desc: "ดูแลอาการปวดคอ บ่า ไหล่ และปวดร้าวลงแขน" },
+  { icon: "✋", category: "มือ", name: "มือชา / นิ้วล็อก", desc: "รักษาภาวะมือชาและนิ้วล็อก" },
+  { icon: "🏃", category: "บาดเจ็บ", name: "บาดเจ็บจากงาน / กีฬา", desc: "ประเมินและฟื้นฟูการบาดเจ็บจากการทำงานและกีฬา" },
+  { icon: "🩻", category: "ตรวจ", name: "เอกซเรย์ดิจิทัล (X-ray)", desc: "เอกซเรย์ดิจิทัลในคลินิกเพื่อวินิจฉัยที่แม่นยำ" },
 ];
 
 function renderServices(items) {
@@ -14,14 +14,14 @@ function renderServices(items) {
     .map(
       (s) => `
     <article class="svc">
-      <div class="svc__cat">${s.category}</div>
+      <div class="svc__cat">${s.icon} ${s.category}</div>
       <h3>${s.name}</h3>
-      <div class="svc__price">฿${Number(s.price).toLocaleString()} <span>· ${s.duration} นาที</span></div>
+      <p class="svc__price"><span>${s.desc}</span></p>
     </article>`
     )
     .join("");
 }
-renderServices(FALLBACK);
+renderServices(SERVICES);
 
 // Booking form -> public appointment endpoint
 const form = document.getElementById("bookingForm");
