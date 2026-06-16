@@ -1,14 +1,16 @@
 :root {
-  --teal: #0e8f8a;
-  --teal-dark: #0a6b67;
-  --teal-soft: #e6f5f4;
-  --ink: #11242b;
-  --muted: #5b6b70;
-  --line: #e3eaec;
+  /* Brand palette: olive green + cream (from clinic logo) */
+  --teal: #3f4a34;
+  --teal-dark: #2c3525;
+  --teal-soft: #f0eee4;
+  --cream: #d9d2c0;
+  --ink: #2b2f26;
+  --muted: #6b6d60;
+  --line: #e6e3d7;
   --bg: #ffffff;
-  --bg-alt: #f5f9f9;
+  --bg-alt: #f7f6ef;
   --radius: 16px;
-  --shadow: 0 10px 30px rgba(14, 143, 138, .12);
+  --shadow: 0 10px 30px rgba(63, 74, 52, .14);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -31,6 +33,8 @@ h1, h2, h3 { line-height: 1.2; font-weight: 600; }
 .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
 .brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; font-size: 1.15rem; }
 .brand__mark { width: 34px; height: 34px; display: grid; place-items: center; background: var(--teal); color: #fff; border-radius: 10px; font-size: 1.1rem; }
+.brand__logo { width: 40px; height: 40px; object-fit: contain; }
+.brand__logo--light { background: #fff; border-radius: 8px; padding: 3px; }
 .brand__text { display: flex; flex-direction: column; line-height: 1; }
 .brand__text small { font-size: .6rem; font-weight: 400; color: var(--muted); letter-spacing: .04em; }
 .nav__links { display: flex; align-items: center; gap: 1.4rem; font-size: .95rem; }
@@ -53,6 +57,14 @@ h1, h2, h3 { line-height: 1.2; font-weight: 600; }
 .hero__hours { list-style: none; margin-bottom: 1.2rem; }
 .hero__hours li { display: flex; justify-content: space-between; padding: .55rem 0; border-bottom: 1px dashed var(--line); font-size: .95rem; }
 .hero__hours li span { color: var(--muted); }
+.hero__walkin { font-size: .85rem; color: var(--teal-dark); background: var(--teal-soft); border-radius: 9px; padding: .6rem .8rem; margin-bottom: 1rem; text-align: center; }
+
+/* Contact cards (walk-in section) */
+.contact-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.8rem; text-align: center; display: block; transition: .2s; }
+.contact-card[href]:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--teal); }
+.contact-card__icon { font-size: 2rem; margin-bottom: .6rem; }
+.contact-card h3 { margin-bottom: .3rem; }
+.contact-card p { color: var(--muted); }
 
 /* Sections */
 .section { padding: 4.5rem 0; }

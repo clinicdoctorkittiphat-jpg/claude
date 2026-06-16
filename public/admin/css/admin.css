@@ -1,19 +1,22 @@
 :root {
-  --teal: #0e8f8a;
-  --teal-dark: #0a6b67;
-  --teal-soft: #e6f5f4;
-  --ink: #11242b;
-  --muted: #6a7a80;
-  --line: #e3eaec;
-  --bg: #f4f7f8;
+  /* Brand palette: olive green + cream (from clinic logo) */
+  --teal: #3f4a34;
+  --teal-dark: #2c3525;
+  --teal-soft: #f0eee4;
+  --cream: #d9d2c0;
+  --ink: #2b2f26;
+  --muted: #6b6d60;
+  --line: #e6e3d7;
+  --bg: #f7f6ef;
   --radius: 14px;
-  --shadow: 0 6px 20px rgba(17,36,43,.06);
+  --shadow: 0 6px 20px rgba(43,47,38,.07);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: "Prompt", system-ui, sans-serif; color: var(--ink); background: var(--bg); }
 .hidden { display: none !important; }
 a { cursor: pointer; text-decoration: none; color: inherit; }
 .brand__mark { display: inline-grid; place-items: center; width: 30px; height: 30px; background: var(--teal); color: #fff; border-radius: 8px; }
+.brand__logo { width: 32px; height: 32px; object-fit: contain; background: #fff; border-radius: 7px; padding: 2px; }
 
 /* Buttons */
 .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .6rem 1.1rem; border-radius: 9px; font-weight: 500; font-size: .9rem; border: 1px solid transparent; cursor: pointer; font-family: inherit; transition: .15s; }

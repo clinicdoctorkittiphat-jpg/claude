@@ -13,7 +13,7 @@
   <header class="nav">
     <div class="container nav__inner">
       <a class="brand" href="/">
-        <span class="brand__mark">✚</span>
+        <img class="brand__logo" src="/img/logo.svg" alt="โลโก้คลินิกกระดูกและข้อหมอกิตติพัฐ" />
         <span class="brand__text">หมอกิตติพัฐ<small>Orthopedic Clinic · Phuket</small></span>
       </a>
       <nav class="nav__links">
@@ -22,7 +22,7 @@
         <a href="#why">ทำไมต้องเรา</a>
         <a href="#contact">ติดต่อ</a>
         <a class="btn btn--ghost" href="/admin/">เข้าระบบ Admin</a>
-        <a class="btn btn--primary" href="#booking">นัดหมาย</a>
+        <a class="btn btn--primary" href="https://line.me/R/ti/p/@drkittiphat" target="_blank" rel="noopener">LINE @drkittiphat</a>
       </nav>
     </div>
   </header>
@@ -34,13 +34,13 @@
         <h1>ดูแลกระดูกและข้อ<br />แบบไม่ผ่าตัด</h1>
         <p>คลินิกกระดูกและข้อหมอกิตติพัฐ — ตรวจวินิจฉัยและรักษาอาการปวดเข่า ปวดหลัง ปวดคอบ่าไหล่ มือชา นิ้วล็อก และการบาดเจ็บจากงานหรือกีฬา โดยแพทย์เฉพาะทาง เน้นการรักษาแบบประคับประคองและให้ความรู้ผู้ป่วย</p>
         <div class="hero__cta">
-          <a class="btn btn--primary btn--lg" href="#booking">จองนัด / ปรึกษา</a>
-          <a class="btn btn--ghost btn--lg" href="https://line.me/R/ti/p/@drkittiphat" target="_blank" rel="noopener">แอด LINE @drkittiphat</a>
+          <a class="btn btn--primary btn--lg" href="https://line.me/R/ti/p/@drkittiphat" target="_blank" rel="noopener">สอบถามทาง LINE @drkittiphat</a>
+          <a class="btn btn--ghost btn--lg" href="tel:0811481780">โทร 081-148-1780</a>
         </div>
         <div class="hero__stats">
           <div><strong>เฉพาะทาง</strong><span>กระดูกและข้อ</span></div>
           <div><strong>ไม่ผ่าตัด</strong><span>เน้นรักษาประคับประคอง</span></div>
-          <div><strong>ภูเก็ต</strong><span>เปิดนอกเวลา</span></div>
+          <div><strong>Walk-in</strong><span>เข้ารับบริการได้เลย</span></div>
         </div>
       </div>
       <div class="hero__card">
@@ -51,9 +51,10 @@
           <li><span>จันทร์ – ศุกร์</span><b>17:00 – 20:00</b></li>
           <li><span>เสาร์</span><b>09:00 – 12:00</b></li>
           <li><span>อาทิตย์</span><b>ปิดทำการ</b></li>
-          <li><span>โทรนัดหมาย</span><b>081-148-1780</b></li>
+          <li><span>โทรสอบถาม</span><b>081-148-1780</b></li>
         </ul>
-        <a class="btn btn--primary btn--block" href="#booking">นัดหมายเลย</a>
+        <p class="hero__walkin">รับผู้ป่วย Walk-in ในเวลาทำการ — ไม่ต้องนัดล่วงหน้า</p>
+        <a class="btn btn--primary btn--block" href="https://line.me/R/ti/p/@drkittiphat" target="_blank" rel="noopener">สอบถามทาง LINE</a>
       </div>
     </div>
   </section>
@@ -97,42 +98,36 @@
     </div>
   </section>
 
-  <section id="booking" class="section section--alt">
-    <div class="container booking">
-      <div class="booking__copy">
-        <h2>จองนัด / ปรึกษา</h2>
-        <p>กรอกข้อมูลเพื่อขอนัดหมาย ทีมงานจะติดต่อกลับเพื่อยืนยันเวลา หรือแอด LINE <b>@drkittiphat</b> เพื่อสอบถามได้ทันที</p>
-        <ul class="ticks">
-          <li>ตอบกลับในเวลาทำการ</li>
-          <li>ข้อมูลของคุณเป็นความลับ</li>
-        </ul>
+  <section id="visit" class="section section--alt">
+    <div class="container">
+      <div class="section__head">
+        <h2>เข้ารับบริการ (Walk-in)</h2>
+        <p>คลินิกรับผู้ป่วย Walk-in ในเวลาทำการ ไม่ต้องนัดล่วงหน้า — มีคำถามสอบถามทาง LINE หรือโทรได้เลย</p>
       </div>
-      <form class="card form" id="bookingForm">
-        <div class="field"><label>ชื่อ-นามสกุล *</label><input name="name" required placeholder="เช่น สมชาย ใจดี" /></div>
-        <div class="field"><label>เบอร์โทร *</label><input name="phone" required placeholder="08x-xxx-xxxx" /></div>
-        <div class="field"><label>อาการ / บริการที่สนใจ</label>
-          <select name="service">
-            <option>ปวดเข่า / ข้อเข่าเสื่อม</option>
-            <option>ปวดหลัง / ปวดร้าวลงขา</option>
-            <option>ปวดคอ บ่า ไหล่ แขน</option>
-            <option>มือชา / นิ้วล็อก</option>
-            <option>บาดเจ็บจากงาน / กีฬา</option>
-            <option>เอกซเรย์ดิจิทัล (X-ray)</option>
-            <option>อื่น ๆ</option>
-          </select>
+      <div class="grid grid--3">
+        <a class="contact-card" href="tel:0811481780">
+          <div class="contact-card__icon">📞</div>
+          <h3>โทรสอบถาม</h3>
+          <p>081-148-1780</p>
+        </a>
+        <a class="contact-card" href="https://line.me/R/ti/p/@drkittiphat" target="_blank" rel="noopener">
+          <div class="contact-card__icon">💬</div>
+          <h3>LINE Official</h3>
+          <p>@drkittiphat</p>
+        </a>
+        <div class="contact-card">
+          <div class="contact-card__icon">🕔</div>
+          <h3>เวลาทำการ</h3>
+          <p>จ–ศ 17:00–20:00 · ส 09:00–12:00</p>
         </div>
-        <div class="field"><label>วันที่สะดวก</label><input name="date" type="date" /></div>
-        <div class="field"><label>รายละเอียดเพิ่มเติม</label><textarea name="note" rows="2" placeholder="อาการ / คำถาม"></textarea></div>
-        <button class="btn btn--primary btn--block" type="submit">ส่งคำขอนัดหมาย</button>
-        <p class="form__msg" id="bookingMsg"></p>
-      </form>
+      </div>
     </div>
   </section>
 
   <footer id="contact" class="footer">
     <div class="container footer__inner">
       <div>
-        <div class="brand brand--light"><span class="brand__mark">✚</span><span class="brand__text">หมอกิตติพัฐ<small>Orthopedic Clinic · Phuket</small></span></div>
+        <div class="brand brand--light"><img class="brand__logo brand__logo--light" src="/img/logo.svg" alt="โลโก้คลินิก" /><span class="brand__text">หมอกิตติพัฐ<small>Orthopedic Clinic · Phuket</small></span></div>
         <p>คลินิกกระดูกและข้อหมอกิตติพัฐ — ดูแลกระดูกและข้อแบบไม่ผ่าตัด ที่ภูเก็ต</p>
       </div>
       <div>

@@ -19,14 +19,14 @@ export function seed() {
     { id: "usr_nurse", name: "พยาบาลสมหญิง", email: "nurse@drkittiphat.clinic", username: "nurse", password: hash("nurse123"), role: "staff" },
   ]);
 
-  // Prices below are editable placeholders — set real prices in the admin panel.
+  // Service catalog (no fixed prices — clinic is walk-in, charges recorded per visit).
   replaceAll("services", [
-    { id: "svc_consult", name: "ตรวจ/ปรึกษาแพทย์กระดูกและข้อ", category: "OPD", price: 500, duration: 20, active: true },
-    { id: "svc_xray", name: "เอกซเรย์ดิจิทัล (Digital X-ray)", category: "Imaging", price: 600, duration: 15, active: true },
-    { id: "svc_injection", name: "ฉีดยาเข้าข้อ (Joint Injection)", category: "Procedure", price: 2500, duration: 30, active: true },
-    { id: "svc_trigger", name: "ฉีดยานิ้วล็อก (Trigger Finger Injection)", category: "Procedure", price: 1500, duration: 20, active: true },
-    { id: "svc_med", name: "ยา / เวชภัณฑ์", category: "Other", price: 0, duration: 0, active: true },
-    { id: "svc_dressing", name: "ทำแผล / หัตถการเล็ก", category: "Procedure", price: 400, duration: 15, active: true },
+    { id: "svc_consult", name: "ตรวจ/ปรึกษาแพทย์กระดูกและข้อ", category: "OPD", active: true },
+    { id: "svc_xray", name: "เอกซเรย์ดิจิทัล (Digital X-ray)", category: "Imaging", active: true },
+    { id: "svc_injection", name: "ฉีดยาเข้าข้อ (Joint Injection)", category: "Procedure", active: true },
+    { id: "svc_trigger", name: "ฉีดยานิ้วล็อก (Trigger Finger Injection)", category: "Procedure", active: true },
+    { id: "svc_dressing", name: "ทำแผล / หัตถการเล็ก", category: "Procedure", active: true },
+    { id: "svc_med", name: "ยา / เวชภัณฑ์", category: "Other", active: true },
   ]);
 
   replaceAll("patients", [
@@ -45,11 +45,8 @@ export function seed() {
     { id: "apt_5", patientId: "pat_1004", patientName: "ปรียา วงศ์ทอง", serviceId: "svc_injection", serviceName: "ฉีดยาเข้าข้อ", date: addDays(2), time: "17:30", status: "pending", note: "" },
   ]);
 
-  replaceAll("invoices", [
-    { id: "inv_1", number: "INV-2026-0001", patientId: "pat_1001", patientName: "สมชาย ใจดี", date: addDays(-1), items: [{ name: "Consultation", qty: 1, price: 800 }, { name: "X-ray", qty: 1, price: 600 }], total: 1400, status: "paid" },
-    { id: "inv_2", number: "INV-2026-0002", patientId: "pat_1002", patientName: "มาลี รักสุข", date: addDays(-1), items: [{ name: "Physiotherapy", qty: 1, price: 1200 }], total: 1200, status: "paid" },
-    { id: "inv_3", number: "INV-2026-0003", patientId: "pat_1004", patientName: "ปรียา วงศ์ทอง", date: addDays(0), items: [{ name: "Joint Injection", qty: 1, price: 2500 }], total: 2500, status: "unpaid" },
-  ]);
+  // Billing left empty — record charges per visit only if/when the clinic wants to.
+  replaceAll("invoices", []);
 
   replaceAll("inventory", [
     { id: "itm_1", sku: "MED-001", name: "Diclofenac 50mg (tab)", category: "Medicine", stock: 420, reorderLevel: 100, unit: "tab" },

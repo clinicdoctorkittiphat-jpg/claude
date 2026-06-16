@@ -21,13 +21,14 @@ npm start        # http://localhost:3000  (auto-seeds demo data on first run)
 ## What's included
 
 **Landing page** (`public/`)
-- Hero, services (priced), about doctor, why-us, online booking form, contact.
-- Booking form posts to the ERP → appears in Admin as a `pending` appointment (source: website).
+- Hero, conditions treated, about doctor, why-us, walk-in contact (phone / LINE / hours).
+- Walk-in clinic — no online booking; contact via LINE `@drkittiphat` or phone.
+- No prices shown (clinic lists none). Brand colors + logo from the clinic identity.
 - Thai-first, responsive.
 
 **Admin ERP** (`public/admin/`)
-- Token login + dashboard (revenue, today's appointments, patients, low-stock alerts).
-- CRUD modules: Appointments, Patients, Services, Invoices, Inventory.
+- Token login + dashboard (today's patients, total patients, waiting, low-stock alerts).
+- CRUD modules: Walk-in Visits (queue), Patients, Services (catalog), Invoices (optional billing), Inventory.
 - Search, add/edit/delete via modal forms (schema-driven).
 
 ## Structure
@@ -39,6 +40,7 @@ src/seed.js        Demo data (seed / seedIfEmpty)
 data/clinic.db     The SQLite database (created on first run; git-ignored)
 render.yaml        Render deploy blueprint (web service + persistent disk)
 public/            Landing page
+public/img/        Brand logo (SVG)
 public/admin/      Admin SPA
 ```
 
@@ -47,7 +49,6 @@ public/admin/      Admin SPA
 | Method | Path | Auth | Purpose |
 |---|---|---|---|
 | POST | `/api/auth/login` | – | Get token |
-| POST | `/api/public/appointments` | – | Booking from website |
 | GET | `/api/dashboard/stats` | ✓ | Dashboard metrics |
 | GET/POST | `/api/:collection` | ✓ | List / create |
 | GET/PUT/DELETE | `/api/:collection/:id` | ✓ | Read / update / delete |

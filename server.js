@@ -42,23 +42,6 @@ app.post("/api/auth/logout", auth, (req, res) => {
   res.json({ ok: true });
 });
 
-// --- Public: appointment requests from the landing page --------------------
-app.post("/api/public/appointments", (req, res) => {
-  const { name, phone, service, date, note } = req.body || {};
-  if (!name || !phone) return res.status(400).json({ error: "name and phone required" });
-  const row = store.create("appointments", {
-    patientName: name,
-    phone,
-    serviceName: service || "Consultation",
-    date: date || "",
-    time: "",
-    status: "pending",
-    note: note || "",
-    source: "website",
-  });
-  res.status(201).json({ ok: true, id: row.id });
-});
-
 // --- Dashboard stats -------------------------------------------------------
 app.get("/api/dashboard/stats", auth, (req, res) => {
   const today = new Date().toISOString().slice(0, 10);

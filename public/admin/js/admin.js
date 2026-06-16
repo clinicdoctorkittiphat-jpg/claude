@@ -39,7 +39,7 @@ const tag = (v) => `<span class="tag tag--${STATUS_TAG[v] || "gray"}">${esc(v)}<
 // ===== Schema: drives tables + forms =====
 const SCHEMA = {
   appointments: {
-    title: "นัดหมาย (Appointments)",
+    title: "คิว / ผู้ป่วยเข้าตรวจ (Walk-in Visits)",
     columns: [
       { key: "date", label: "Date" },
       { key: "time", label: "Time" },
@@ -82,15 +82,11 @@ const SCHEMA = {
     columns: [
       { key: "name", label: "Service" },
       { key: "category", label: "Category" },
-      { key: "price", label: "Price", render: (v) => baht(v) },
-      { key: "duration", label: "Mins" },
       { key: "active", label: "Active", render: (v) => (v ? tag("active") : tag("off")) },
     ],
     fields: [
       { key: "name", label: "Service name", required: true },
       { key: "category", label: "Category", type: "select", options: ["OPD", "Imaging", "Procedure", "Rehab", "Other"] },
-      { key: "price", label: "Price (฿)", type: "number" },
-      { key: "duration", label: "Duration (min)", type: "number" },
       { key: "active", label: "Active", type: "checkbox" },
     ],
   },
@@ -141,24 +137,24 @@ async function renderDashboard() {
   const s = await api("/dashboard/stats");
   view.innerHTML = `
     <div class="stats">
-      <div class="stat stat--accent"><div class="stat__label">รายได้ (ชำระแล้ว)</div><div class="stat__value">${baht(s.revenuePaid)}</div></div>
-      <div class="stat"><div class="stat__label">นัดหมายวันนี้</div><div class="stat__value">${s.appointmentsToday}</div></div>
+      <div class="stat stat--accent"><div class="stat__label">ผู้ป่วยวันนี้</div><div class="stat__value">${s.appointmentsToday}</div></div>
       <div class="stat"><div class="stat__label">ผู้ป่วยทั้งหมด</div><div class="stat__value">${s.patients}</div></div>
+      <div class="stat"><div class="stat__label">รอตรวจ</div><div class="stat__value">${s.pendingAppointments}</div></div>
       <div class="stat stat--warn"><div class="stat__label">สต็อกใกล้หมด</div><div class="stat__value">${s.lowStock}</div></div>
     </div>
     <div class="grid2">
       <div class="panel">
-        <div class="panel__head"><h3>นัดหมายที่กำลังจะถึง</h3><a class="btn btn--ghost btn--sm" data-go="appointments">ดูทั้งหมด →</a></div>
-        <table><thead><tr><th>Date</th><th>Time</th><th>Patient</th><th>Service</th><th>Status</th></tr></thead>
-        <tbody>${s.upcoming.length ? s.upcoming.map((a) => `<tr><td>${esc(a.date)}</td><td>${esc(a.time || "-")}</td><td>${esc(a.patientName)}</td><td>${esc(a.serviceName || "-")}</td><td>${tag(a.status)}</td></tr>`).join("") : `<tr><td colspan="5" class="empty">ไม่มีนัดหมาย</td></tr>`}</tbody></table>
+        <div class="panel__head"><h3>คิว / ผู้ป่วยที่กำลังจะมา</h3><a class="btn btn--ghost btn--sm" data-go="appointments">ดูทั้งหมด →</a></div>
+        <table><thead><tr><th>วันที่</th><th>เวลา</th><th>ผู้ป่วย</th><th>บริการ</th><th>สถานะ</th></tr></thead>
+        <tbody>${s.upcoming.length ? s.upcoming.map((a) => `<tr><td>${esc(a.date)}</td><td>${esc(a.time || "-")}</td><td>${esc(a.patientName)}</td><td>${esc(a.serviceName || "-")}</td><td>${tag(a.status)}</td></tr>`).join("") : `<tr><td colspan="5" class="empty">ไม่มีคิว</td></tr>`}</tbody></table>
       </div>
       <div class="panel">
-        <div class="panel__head"><h3>สรุปการเงิน</h3></div>
+        <div class="panel__head"><h3>สรุปคลินิก</h3></div>
         <table><tbody>
-          <tr><td>รายได้ชำระแล้ว</td><td style="text-align:right"><b>${baht(s.revenuePaid)}</b></td></tr>
-          <tr><td>ค้างชำระ</td><td style="text-align:right">${tag("unpaid")} ${baht(s.revenueUnpaid)}</td></tr>
-          <tr><td>นัดหมายรอยืนยัน</td><td style="text-align:right">${s.pendingAppointments}</td></tr>
-          <tr><td>รายการสต็อกใกล้หมด</td><td style="text-align:right">${s.lowStock}</td></tr>
+          <tr><td>ผู้ป่วยทั้งหมด</td><td style="text-align:right"><b>${s.patients}</b></td></tr>
+          <tr><td>ผู้ป่วยวันนี้</td><td style="text-align:right">${s.appointmentsToday}</td></tr>
+          <tr><td>รอตรวจ</td><td style="text-align:right">${s.pendingAppointments}</td></tr>
+          <tr><td>รายการสต็อกใกล้หมด</td><td style="text-align:right">${s.lowStock ? tag("low") + " " : ""}${s.lowStock}</td></tr>
         </tbody></table>
       </div>
     </div>`;

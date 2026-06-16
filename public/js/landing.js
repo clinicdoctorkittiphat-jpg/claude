@@ -22,27 +22,3 @@ function renderServices(items) {
     .join("");
 }
 renderServices(SERVICES);
-
-// Booking form -> public appointment endpoint
-const form = document.getElementById("bookingForm");
-const msg = document.getElementById("bookingMsg");
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(form));
-  msg.className = "form__msg";
-  msg.textContent = "กำลังส่ง...";
-  try {
-    const res = await fetch("/api/public/appointments", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) throw new Error();
-    msg.className = "form__msg ok";
-    msg.textContent = "✓ ส่งคำขอเรียบร้อย ทีมงานจะติดต่อกลับเพื่อยืนยันนัดหมาย";
-    form.reset();
-  } catch {
-    msg.className = "form__msg err";
-    msg.textContent = "เกิดข้อผิดพลาด กรุณาลองใหม่ หรือโทร 02-123-4567";
-  }
-});
