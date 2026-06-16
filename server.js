@@ -1,12 +1,17 @@
 import express from "express";
+import bcrypt from "bcryptjs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { randomUUID } from "node:crypto";
 import * as store from "./src/db.js";
+import { seedIfEmpty } from "./src/seed.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// First boot on a fresh database → load demo data automatically.
+if (seedIfEmpty()) console.log("  (auto-seeded demo data into empty database)");
 
 app.use(express.json());
 
@@ -22,10 +27,9 @@ function auth(req, res, next) {
 
 app.post("/api/auth/login", (req, res) => {
   const { username, password } = req.body || {};
-  const user = store
-    .list("users")
-    .find((u) => u.username === username && u.password === password);
-  if (!user) return res.status(401).json({ error: "Invalid credentials" });
+  const user = store.list("users").find((u) => u.username === username);
+  if (!user || !bcrypt.compareSync(password || "", user.password))
+    return res.status(401).json({ error: "Invalid credentials" });
   const token = randomUUID();
   const safe = { id: user.id, name: user.name, role: user.role, email: user.email };
   sessions.set(token, safe);

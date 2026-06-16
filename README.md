@@ -1,15 +1,16 @@
 # Dr. Kittiphat — Clinic ERP (Prototype)
 
 A landing page + admin ERP backend for **Dr. Kittiphat Orthopaedic Clinic**.
-Node + Express with a zero-setup JSON datastore (no native builds, no DB server).
+Node + Express, SQLite (built-in `node:sqlite`, no native build), bcrypt-hashed passwords.
 
 ## Run
 
 ```bash
 npm install
-npm run seed     # load demo data (run once)
-npm start        # http://localhost:3000
+npm start        # http://localhost:3000  (auto-seeds demo data on first run)
 ```
+
+> `npm run seed` re-loads/refreshes the demo data at any time.
 
 - **Landing page** → http://localhost:3000/
 - **Admin ERP** → http://localhost:3000/admin/
@@ -30,10 +31,11 @@ npm start        # http://localhost:3000
 ## Structure
 
 ```
-server.js          Express app: auth + REST API + static hosting
-src/db.js          JSON-file datastore (swap for SQLite/Postgres later)
-src/seed.js        Demo data
-data/db.json       The database (created on seed)
+server.js          Express app: bcrypt auth + REST API + static hosting + auto-seed
+src/db.js          SQLite datastore via node:sqlite (generic CRUD)
+src/seed.js        Demo data (seed / seedIfEmpty)
+data/clinic.db     The SQLite database (created on first run; git-ignored)
+render.yaml        Render deploy blueprint (web service + persistent disk)
 public/            Landing page
 public/admin/      Admin SPA
 ```
@@ -50,8 +52,21 @@ public/admin/      Admin SPA
 
 `:collection` = `patients` · `appointments` · `services` · `invoices` · `inventory`
 
+## Deploy (Render — free)
+
+1. Push this repo to GitHub (done).
+2. Go to [render.com](https://render.com) → **New + → Blueprint** → connect this repo.
+3. Render reads `render.yaml`, provisions the service + a 1 GB disk for the SQLite
+   database, and deploys. You get a public URL like `https://drkittiphat-erp.onrender.com`.
+
+The included disk keeps `clinic.db` persistent across restarts (path set via `DB_PATH`).
+
 ## Prototype notes / next steps
 
-- Auth is in-memory tokens with plaintext demo passwords — **replace before production** (hash passwords, persistent sessions/JWT).
-- Swap `src/db.js` for SQLite/Postgres when data grows.
-- Add: invoice line-item editor, PDF receipts, appointment calendar view, role-based permissions, audit log.
+- ✅ Passwords are bcrypt-hashed; SQLite gives real persistence.
+- Auth tokens are still **in-memory** (reset on restart, single-instance only) — move to
+  JWT or a session store before scaling.
+- Add: invoice line-item editor, PDF receipts, appointment calendar view,
+  role-based permissions, audit log.
+- For multi-user production with sensitive patient data, move to Postgres and add HTTPS,
+  backups, and access logging.

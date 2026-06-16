@@ -1,0 +1,19 @@
+# Render Blueprint — deploy the ERP with one click.
+# In Render: New + → Blueprint → connect this GitHub repo → Apply.
+services:
+  - type: web
+    name: drkittiphat-erp
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      # Persist the SQLite file on a disk so data survives restarts.
+      - key: DB_PATH
+        value: /var/data/clinic.db
+    disk:
+      name: clinic-data
+      mountPath: /var/data
+      sizeGB: 1
